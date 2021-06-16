@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.projects.index', [
+            'projects' => Project::all()
+        ]);
     }
 
     /**
@@ -30,12 +33,16 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProjectRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        if (!Project::create(array_merge($request->validated(), ['user_id' => auth()->user()->id]))) {
+            return redirect()->back()->with('error', 'Error while creating project');
+        }
+
+        return redirect()->back()->with('success', 'Project created!');
     }
 
     /**
