@@ -7,11 +7,41 @@
                 <h1>Projects</h1>
                 <hr>
 
+                @if($projects->count())
+                    <table class="table table-hover table-bordered mb-4 bg-white">
+                        <tbody>
+                        @foreach($projects as $project)
+                            <tr>
+                                <td class="align-middle">
+                                    <h4>{{ $project->title }}</h4>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ $project->progress }}%;" aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">{{ $project->finished_tasks }}/{{ $project->tasks->count() }}</div>
+                                    </div>
+                                </td>
+                                <td width="1px">
+                                    <a href="{{ route('projects.show', $project) }}" class="btn btn-secondary">
+                                        <i class="fa fa-check-square-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="card mb-4">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-0 font-weight-bold">No projects found...</h3>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="card mb-4">
                     <form action="{{ route('projects.store') }}" method="post">
                         @csrf
                         <div class="card-header">
-                            <strong>Add Project</strong>
+                            <strong>Create Project</strong>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
@@ -34,41 +64,6 @@
                         </div>
                     </form>
                 </div>
-
-                @if($projects->count())
-                    <table class="table table-hover table-bordered mb-0">
-                        <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th class="text-center" width="100px">Progress</th>
-                            <th width="1px"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($projects as $project)
-                            <tr>
-                                <td>{{ $project->title }}</td>
-                                <td class="text-center">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{ $project->progress }}%;" aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">{{ $project->finished_tasks }}/{{ $project->tasks->count() }}</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="{{ route('projects.show', $project) }}" class="btn btn-sm btn-dark">
-                                        Tasks
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="card">
-                        <div class="card-body p-5 text-center">
-                            <h3 class="mb-0 font-weight-bold">No projects found...</h3>
-                        </div>
-                    </div>
-                @endif
 
             </div>
         </div>

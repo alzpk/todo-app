@@ -8,7 +8,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">
-                        Delete
+                        <i class="fa fa-trash"></i>
                     </button>
                 </form>
                 <h1>{{ $project->title }}</h1>
@@ -16,33 +16,33 @@
 
                 @if($project->tasks->count())
                     <table class="table table-hover table-bordered table-striped mb-4">
-                        <thead>
-                        <tr>
-                            <th width="1px"></th>
-                            <th>Title</th>
-                            <th width="1px"></th>
-                        </tr>
-                        </thead>
                         <tbody>
                         @foreach($project->tasks as $task)
                             <tr>
-                                <td>
+                                <td width="1px" class="align-middle">
                                     <input
                                         type="checkbox"
-                                        class="update-task-status"
+                                        class="update-input"
                                         data-route="{{ route('tasks.update', $task) }}"
+                                        data-field="is_done"
                                         {{ $task->is_done ? 'checked' : '' }}
                                     >
                                 </td>
-                                <td
-                                    title="{{ $task->description ?? 'No description...' }}"
-                                >{{ $task->title }}</td>
-                                <td>
+                                <td title="{{ $task->description ?? 'No description...' }}">
+                                    <input
+                                        type="text"
+                                        value="{{ $task->title }}"
+                                        data-route="{{ route('tasks.update', $task) }}"
+                                        data-field="title"
+                                        class="form-control update-input"
+                                    >
+                                </td>
+                                <td width="1px">
                                     <form action="{{ route('tasks.delete', $task) }}" method="post" class="form-delete">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            Delete
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>

@@ -28,13 +28,13 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param TaskRequest $request
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        if (!$task->update(['is_done' => $request->input('is_done', false)])) {
+        if (!$task->update($request->validated())) {
             return redirect()->back()->with('error', 'An unexpected error occurred while completing the task!');
         }
 
