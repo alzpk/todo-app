@@ -13,7 +13,7 @@
                         @foreach($projects as $project)
                             <tr>
                                 <td class="align-middle">
-                                    <h4>{{ $project->title }}</h4>
+                                    <h4 class="mb-0">{{ $project->title }}</h4>
                                 </td>
                                 <td class="text-center align-middle">
                                     <div class="progress">
