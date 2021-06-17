@@ -74,11 +74,15 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Project $project)
     {
-        //
+        if (!$project->delete()) {
+            return redirect()->back()->with('error', 'An unexpected error occurred while deleting the project!');
+        }
+
+        return redirect()->route('projects.index')->with('success', 'Project deleted!');
     }
 }

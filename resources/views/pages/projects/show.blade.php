@@ -4,6 +4,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <form action="{{ route('projects.delete', $project) }}" method="post" class="float-right form-delete">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
                 <h1>{{ $project->title }}</h1>
                 <hr>
 
