@@ -4,6 +4,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <h1>Projects</h1>
+                <hr>
 
                 <div class="card mb-4">
                     <form action="{{ route('projects.store') }}" method="post">
@@ -34,11 +36,11 @@
                 </div>
 
                 @if($projects->count())
-                    <table class="table table-hover table-bordered table-striped mb-0">
+                    <table class="table table-hover table-bordered mb-0">
                         <thead>
                         <tr>
                             <th>Title</th>
-                            <th class="text-right" width="100px">Tasks</th>
+                            <th class="text-center" width="100px">Progress</th>
                             <th width="1px"></th>
                         </tr>
                         </thead>
@@ -46,10 +48,14 @@
                         @foreach($projects as $project)
                             <tr>
                                 <td>{{ $project->title }}</td>
-                                <td class="text-right">{{ $project->tasks->count() }}</td>
+                                <td class="text-center">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ $project->progress }}%;" aria-valuenow="{{ $project->progress }}" aria-valuemin="0" aria-valuemax="100">{{ $project->finished_tasks }}/{{ $project->tasks->count() }}</div>
+                                    </div>
+                                </td>
                                 <td>
-                                    <a href="{{ route('projects.edit', $project) }}" class="btn btn-sm btn-dark">
-                                        Edit
+                                    <a href="{{ route('projects.show', $project) }}" class="btn btn-sm btn-dark">
+                                        Tasks
                                     </a>
                                 </td>
                             </tr>
