@@ -38,7 +38,7 @@ class TaskController extends Controller
             return redirect()->back()->with('error', 'An unexpected error occurred while completing the task!');
         }
 
-        return redirect()->back()->with('success', 'Task completed!');
+        return redirect()->back()->with('success', 'Task updated!');
     }
 
     /**

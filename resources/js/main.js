@@ -40,7 +40,36 @@ $(function() {
         $.ajax({
             method: 'PUT',
             url: route,
-            data: data
+            data: data,
+            dataType: 'json',
+        }).done(function (data) {
+            // I haven't added any smart way of showing flash messages, when
+            // done with the ajax call.
         });
+    });
+
+    // To trigger then change, whenever a checkbox is checked, we need to fire blur.
+    $('input[type="checkbox"].update-input').click(function () {
+        $(this).blur();
+    });
+
+    /**
+     * Flash messages
+     */
+    let flashMsg = $('.flash-msg'),
+        timer;
+
+    // Show message
+    flashMsg.slideToggle('slow');
+
+    // Auto hide message after 5 seconds
+    timer = setTimeout(function () {
+        flashMsg.slideToggle('slow');
+    }, 5000);
+
+    // Hide message when pressing close
+    body.on('click', '.hide-flash-msg', function () {
+        clearTimeout(timer);
+        flashMsg.slideToggle('slow');
     });
 });
